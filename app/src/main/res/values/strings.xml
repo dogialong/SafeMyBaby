@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Safe For Baby</string>
+    <string name="action_settings">Settings</string>
+    <string name="item_titles">Palais Garnier</string>
+    <string name="item_descs">The Palais Garnier which locates in Paris was built from 1861 for
+        the Paris Opera.
+    </string>
+    <string name="detail_desc">Đây là câu hỏi tình huống
+    </string>
+    <string name="detail_location">"8 Rue Scribe, 75009 Paris, France"</string>
+    <string name="buttonQuestion">Question</string>
+    <string name="buttonFlashcard">Flash Cards</string>
+    <string name="buttonYes">Should</string>
+    <string name="buttonNo">Shouldnt</string>
+</resources>

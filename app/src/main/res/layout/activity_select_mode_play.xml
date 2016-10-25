@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:background="#FFD47F">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:gravity="center">
+        <ImageView
+            android:id="@+id/imgModePlay"
+            android:layout_width="@dimen/_280sdp"
+            android:layout_height="@dimen/_100sdp"
+            android:background="@drawable/txt_chedochoi"/>
+        <ImageView
+            android:id="@+id/logoModePlay"
+            android:layout_width="@dimen/_140sdp"
+            android:layout_height="@dimen/_130sdp"
+            android:background="@mipmap/logo"
+            android:layout_marginTop="@dimen/_25sdp"/>
+        <Button
+            android:id="@+id/btnQuestion"
+            android:layout_width="@dimen/_240sdp"
+            android:layout_height="@dimen/_90sdp"
+            android:background="@drawable/btn_cauhoi"
+            android:layout_marginTop="@dimen/_40sdp"
+            android:layout_marginBottom="@dimen/_25sdp"/>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/btnFlashcard"
+                android:layout_width="@dimen/_240sdp"
+                android:layout_height="@dimen/_90sdp"
+                android:background="@drawable/btn_flashcard"
+                />
+            <ImageView
+                android:id="@+id/imgLock"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:layout_marginLeft="@dimen/_200sdp"
+                android:background="@drawable/icon_lock"/>
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>
