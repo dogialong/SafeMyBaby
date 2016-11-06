@@ -13,7 +13,7 @@
        android:gravity="center"
        >
        <ImageView
-           android:layout_marginTop="@dimen/_215sdp"
+           android:layout_marginTop="@dimen/_200sdp"
            android:id="@+id/imgLogoSplash"
            android:layout_width="@dimen/_90sdp"
            android:layout_height="@dimen/_90sdp"

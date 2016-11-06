@@ -9,39 +9,55 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center">
-        <TextView
-            android:id="@+id/txtTileQuestion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorWhites"
-            android:text="Nên hay không nên ?"
-            android:textStyle="bold"
-            android:textSize="@dimen/_30sdp"
-            android:layout_marginTop="@dimen/_30sdp"/>
-        <ImageView
-            android:id="@+id/imgQuestion"
-            android:layout_width="@dimen/_250sdp"
-            android:layout_height="@dimen/_250sdp"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:layout_marginBottom="@dimen/_80sdp"
-            android:background="@color/colorRuler"
-            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/btnBackQuestionScreen"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:background="@drawable/btn_back"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_5sdp"/>
+            <TextView
+                android:id="@+id/txtTileQuestion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorWhites"
+                android:text="Nên hay không nên ?"
+                android:textStyle="bold"
+                android:textSize="@dimen/_30sdp"
+                android:layout_marginTop="@dimen/_35sdp"
+                android:layout_marginLeft="@dimen/_40sdp"/>
+            <ImageView
+                android:id="@+id/imgQuestion"
+                android:layout_width="@dimen/_230sdp"
+                android:layout_height="@dimen/_230sdp"
+                android:layout_marginTop="@dimen/_100sdp"
+                android:layout_marginBottom="@dimen/_50sdp"
+                android:layout_marginLeft="@dimen/_65sdp"
+                android:background="@color/colorRuler"
+                />
+        </RelativeLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <Button
                 android:id="@+id/btnYes1"
-                android:layout_width="@dimen/_125sdp"
-                android:layout_height="@dimen/_125sdp"
+                android:layout_width="@dimen/_120sdp"
+                android:layout_height="@dimen/_120sdp"
                 android:background="@drawable/btn_yes"
-                android:layout_marginLeft="@dimen/_35sdp"   android:layout_marginRight="@dimen/_110sdp"
+                android:layout_marginRight="@dimen/_80sdp"
+                android:layout_marginLeft="@dimen/_20sdp"
                />
 
             <Button
                 android:id="@+id/btnNo1"
-                android:layout_width="@dimen/_125sdp"
-                android:layout_height="@dimen/_125sdp"
+                android:layout_width="@dimen/_120sdp"
+                android:layout_height="@dimen/_120sdp"
                 android:background="@drawable/btn_no"/>
         </LinearLayout>
     </LinearLayout>

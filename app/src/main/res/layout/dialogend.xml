@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentTop="true"
+
+        android:layout_marginLeft="6dp"
+
+        android:layout_marginRight="6dp"
+
+        android:layout_marginTop="6dp"
+
+        android:background="@drawable/bg_dialog"
+
+        android:gravity="center"
+
+        android:orientation="vertical"
+
+        android:paddingBottom="20dp"
+
+
+        >
+
+
+        <TextView
+
+            android:id="@+id/title"
+
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+
+            android:background="@drawable/bg_title"
+
+            android:padding="10dp"
+
+            android:text="Xin chuc mung"
+
+            android:textColor="@android:color/white"
+
+            android:textSize="18sp"
+
+            />
+
+
+        <ImageView
+
+            android:id="@+id/imgViewDialogEnd"
+
+            android:layout_width="@dimen/_100sdp"
+
+            android:layout_height="@dimen/_100sdp"
+
+            android:layout_margin="20dp"
+
+            android:background="@mipmap/ic_launcher"
+
+            android:lineSpacingExtra="6dp" />
+
+        <TextView
+            android:id="@+id/txtEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+
+                android:id="@+id/positive_button_end"
+
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/bt_dialog_positive"
+
+                android:text="Choi tiep"
+
+                android:textColor="@android:color/white"
+
+                />
+
+            <Button
+
+                android:id="@+id/exitButton"
+
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/bt_dialog_positive"
+
+                android:text="Thoat"
+
+                android:textColor="@android:color/white"
+
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <Button
+
+        android:id="@+id/close_button"
+
+        android:layout_width="40dp"
+
+        android:layout_height="40dp"
+
+        android:layout_alignParentRight="true"
+
+        android:layout_alignParentTop="true"
+
+        android:background="@drawable/bt_dialog_close"
+
+        android:text="×"
+
+        android:textColor="#9acd32"
+
+        />
+
+
+</RelativeLayout>

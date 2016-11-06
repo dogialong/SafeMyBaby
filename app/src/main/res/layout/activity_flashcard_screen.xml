@@ -6,6 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#FFD47F">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -32,11 +33,6 @@
                     android:textSize="@dimen/_30sdp"
                     />
             </LinearLayout>
-            <ProgressBar
-                android:id="@+id/probarCountDown"
-                android:layout_width="@dimen/_200sdp"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_marginTop="@dimen/_5sdp"/>
             <ImageView
                 android:id="@+id/imgQuestion"
                 android:layout_width="@dimen/_250sdp"

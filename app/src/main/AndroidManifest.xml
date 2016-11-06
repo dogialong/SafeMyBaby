@@ -12,6 +12,12 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
+        <meta-data
+            android:name="AA_DB_NAME"
+            android:value="safebaby.db" />
+        <meta-data
+            android:name="AA_DB_VERSION"
+            android:value="1" />
         <activity android:name=".SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,8 +27,8 @@
         </activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".HandbookCateScreen" />
-        <activity android:name=".QuestionScreen" />
         <activity android:name=".FlashCardScreen" />
+        <activity android:name=".QuestionScreen" />
         <!-- <activity android:name=".QuestionScreen"/> -->
         <activity android:name=".SelectModePlayScreen" />
         <activity android:name=".DetailHandbookScreen" />

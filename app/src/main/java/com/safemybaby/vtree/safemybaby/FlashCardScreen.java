@@ -14,4 +14,9 @@ public class FlashCardScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flashcard_screen);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }

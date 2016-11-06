@@ -2,12 +2,13 @@ package com.safemybaby.vtree.safemybaby;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -25,6 +26,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
 import utils.Contants;
 
 
@@ -37,8 +40,18 @@ public class QuestionCateScreen extends Activity {
     RecyclerView recyclerView;
     List<Question> listCate ;
     QuestionAdapter questionAdapter;
+    static QuestionCateScreen questionCateScreen  ;
     private String TAG = "QuestionCateScreen";
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
+    Unbinder unbinder;
+    boolean doubleBackToExitPressedOnce = false;
+    @OnClick(R.id.btnBackCateQuesntionScreen)
+    public void backToPreScreen(){
+        Intent  i = new Intent(QuestionCateScreen.this,SelectModePlayScreen.class);
+        startActivity(i);
+        finish();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,11 +63,17 @@ public class QuestionCateScreen extends Activity {
 //                Toast.makeText(getApplicationContext(), possition+"", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(QuestionCateScreen.this, QuestionScreen.class);
                 startActivity(i);
+                finish();
             }
         });
         listCate = new ArrayList<>();
         getAllCate(Contants.URL_QUESTIONITEM);
-        overridePendingTransition(R.anim.right_in, R.anim.left_out);
+        overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
+    }
+    @Override
+    public void onResume(){
+        super.onResume();
+        overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
     }
     public List<Question> getAllCate(String url) {
         JsonArrayRequest req = new JsonArrayRequest(url,
@@ -89,36 +108,31 @@ public class QuestionCateScreen extends Activity {
         Log.d(TAG, "getAllCate: " + listCate.size());
         return listCate;
     }
-    private static void unbindDrawable(Drawable d){
-        if(d!=null){
-            d.setCallback(null);
-        }
-    }
-//    @Override
-//    public void onDetachedFromWindow() {
-//        if (AnyApplication.DEBUG)
-//            Log.d(TAG, "onDetachedFromWindow");
-//        super.onDetachedFromWindow();
-//        AnyApplication.getConfig().removeChangedListener(this);
-//
-//        //cleaning up memory
-//        unbindDrawable(mPreviewPopup.getBackground());
-//        unbindDrawable();
-//        //...
-//    }
-//    public final void setCallback(Drawable.Callback cb) {
-//        mCallback = new WeakReference<Drawable.Callback>(cb);
-//    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        if (dialog != null)
-//            dialog.dismiss();
-//        if (progressDialog != null)
-//            progressDialog.dismiss();
-//        mNavigationManager.addTabChangeListener(this);
-//        mNavigationManager.terminate();
-//        doUnbindUploadService();
-//        mNetworkListener.unRegister();
+        System.gc();
+    }
+    public static QuestionCateScreen getInstance(){
+        return   questionCateScreen;
+    }
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
     }
 }

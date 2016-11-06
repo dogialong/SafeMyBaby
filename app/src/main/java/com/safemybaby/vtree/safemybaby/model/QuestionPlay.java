@@ -107,9 +107,10 @@ public class QuestionPlay {
             this.name_image = name_image;
         }
 
-        public DataBean(String result,String link_image){
+        public DataBean(String result,String link_image,String link_explain){
             this.link_image = link_image;
             this.result = result;
+            this.link_explain = link_explain;
         }
     }
 }

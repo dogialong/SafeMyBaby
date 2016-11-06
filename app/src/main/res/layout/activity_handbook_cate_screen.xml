@@ -2,22 +2,19 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true"
     android:background="#FFD47F">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <com.wang.avi.AVLoadingIndicatorView
-            android:id="@+id/avi"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="visible"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/_150sdp"
-            app:indicatorColor="@color/colorPrimary"
-            app:indicatorName="BallSpinFadeLoaderIndicator" />
+        <Button
+            android:id="@+id/btnBackHandbookCateScreen"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:background="@drawable/btn_back"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_5sdp"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -28,8 +25,9 @@
                 android:id="@+id/imgHandBook"
                 android:layout_width="@dimen/_280sdp"
                 android:layout_height="@dimen/_100sdp"
-                android:background="@drawable/txt_camnang"
+                android:background="@drawable/text"
                 android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
                 />
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_view_cate_handbook"

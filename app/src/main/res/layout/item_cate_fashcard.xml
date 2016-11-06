@@ -11,7 +11,6 @@
             android:id="@+id/tile_handbook"
             android:layout_width="@dimen/_140sdp"
             android:layout_height="@dimen/_140sdp"
-            android:background="@drawable/flash_trongnha"
             android:layout_marginTop="@dimen/_15sdp"
             android:layout_marginLeft="@dimen/_30sdp"
             android:layout_marginBottom="@dimen/_15sdp"

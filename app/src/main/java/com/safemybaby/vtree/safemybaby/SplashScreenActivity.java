@@ -12,19 +12,20 @@ import com.eftimoff.androidplayer.actions.property.PropertyAction;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 
 public class SplashScreenActivity extends Activity {
     @BindView(R.id.imgLogoSplash) View imgLogo;
     @BindView(R.id.imgTextSplash) View imgText;
     private static int SPLASH_TIME_OUT = 3000;
+    Unbinder unbinder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
         ButterKnife.bind(SplashScreenActivity.this);
         animateSampleFour( imgLogo, imgText);
-        //animateSampleFive(activityMainProfileName);
         new Handler().postDelayed(new Runnable() {
 
             /*
@@ -39,6 +40,7 @@ public class SplashScreenActivity extends Activity {
                 finish();
             }
         }, SPLASH_TIME_OUT);
+
     }
 
     private void animateSampleFour(View imglogo, View imgtext) {
@@ -51,4 +53,8 @@ public class SplashScreenActivity extends Activity {
                 play();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }

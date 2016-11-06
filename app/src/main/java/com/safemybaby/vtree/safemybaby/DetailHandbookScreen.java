@@ -3,12 +3,11 @@ package com.safemybaby.vtree.safemybaby;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -30,6 +29,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
 import utils.Contants;
 
 public class DetailHandbookScreen extends Activity {
@@ -39,7 +40,16 @@ public class DetailHandbookScreen extends Activity {
     List<Category_Item.DataBean> listCateItem;
     DetailHandbookAdapter detailAdapter;
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
+    static DetailHandbookScreen detailHandbookScreen;
+    Unbinder unbinder;
 
+    boolean doubleBackToExitPressedOnce = false;
+    @OnClick(R.id.btnBackHanbookItem)
+    public void backToPreScreen(){
+        Intent  i = new Intent(DetailHandbookScreen.this,HandbookCateScreen.class);
+        startActivity(i);
+        finish();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,13 +64,19 @@ public class DetailHandbookScreen extends Activity {
                 myIntent.putExtra("content",(Serializable)listCateItem.get(possition).getContent());
                 myIntent.putExtra("name",(Serializable)listCateItem.get(possition).getName());
                 startActivity(myIntent);
+                finish();
             }
         }) ;
         getAllCate(Contants.URL_HANDBOOKITEM);
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
+    @Override
+    public void onResume(){
+        super.onResume();
+        overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
+    }
 
-    public void getAllCate(String url) {
+    public List<Category_Item.DataBean> getAllCate(String url) {
         JsonObjectRequest req = new JsonObjectRequest(url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -103,6 +119,7 @@ public class DetailHandbookScreen extends Activity {
         // Cancelling request
         AppController.getInstance().getRequestQueue().cancelAll(tag_json_arry);
         Log.d(TAG, "getAllCate: " + listCateItem.size());
+        return listCateItem;
     }
     private void loadData(){
 
@@ -115,24 +132,30 @@ public class DetailHandbookScreen extends Activity {
     protected void onDestroy()
     {
         super.onDestroy();
-
-        unbindDrawables(findViewById(R.id.idActivityHandbookItemScreen));
         System.gc();
     }
 
-    private void unbindDrawables(View view)
-    {
-        if (view.getBackground() != null)
-        {
-            view.getBackground().setCallback(null);
+
+    public static DetailHandbookScreen getInstance(){
+        return   detailHandbookScreen;
+    }
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
         }
-        if (view instanceof ViewGroup && !(view instanceof AdapterView))
-        {
-            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++)
-            {
-                unbindDrawables(((ViewGroup) view).getChildAt(i));
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
             }
-            ((ViewGroup) view).removeAllViews();
-        }
+        }, 2000);
     }
 }
+

@@ -1,10 +1,16 @@
 package com.safemybaby.vtree.safemybaby;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +36,7 @@ import java.util.concurrent.TimeUnit;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Action1;
@@ -41,11 +48,20 @@ public class QuestionScreen extends Activity {
     List<QuestionPlay.DataBean> listQuestionPlay2;
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
     int i = 0;
+    int diem = 0;
     Typeface type;
     @BindView(R.id.imgQuestion)
     ImageView imgQuestion;
     @BindView(R.id.txtTileQuestion)
     TextView tvTitleQuestion;
+    Unbinder unbinder;
+    boolean doubleBackToExitPressedOnce = false;
+    @OnClick(R.id.btnBackQuestionScreen)
+    public void backToPreScreen(){
+        Intent i = new Intent(QuestionScreen.this,QuestionCateScreen.class);
+        startActivity(i);
+        finish();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +73,12 @@ public class QuestionScreen extends Activity {
         btn5_run();
         type = Typeface.createFromAsset(getAssets(),"fonts/textfont.ttf");
         tvTitleQuestion.setTypeface(type);
+        overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
+    }
+    @Override
+    public void onResume(){
+        super.onResume();
+        this. overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
     }
 
     /**
@@ -75,7 +97,7 @@ public class QuestionScreen extends Activity {
                             array = obj.getJSONArray("data");
                             for(int i = 0 ; i < array.length() ; i++){
                                 listQuestionPlay.add(new QuestionPlay.DataBean(array.getJSONObject(i).getString("result"),
-                                        array.getJSONObject(i).getString("link_image")));
+                                        array.getJSONObject(i).getString("link_image"),array.getJSONObject(i).getString("link_explain")));
 //
                             }
                         } catch (JSONException e) {
@@ -101,33 +123,125 @@ public class QuestionScreen extends Activity {
     private String _getCurrentTimestamp() {
         return new SimpleDateFormat("k:m:s:S a").format(new Date());
     }
-    @OnClick(R.id.btnNo1)
-    public void btn1_RunSingleTaskAfter2s() {
-        String result = listQuestionPlay.get(i).getResult();
-        if(result.equals("1") && i < listQuestionPlay.size()-1){
+    private void showDialog(){
+        // custom dialog
+        final Dialog dialog = new Dialog(QuestionScreen.this);
+        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.customdialog);
+
+
+        dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN);
+
+        dialog.getWindow().setBackgroundDrawableResource(R.color.colorYellow);
+        ImageView image = (ImageView)dialog.findViewById(R.id.imgViewDialog);
+       // dialog.getWindow().setBackgroundDrawableResource(R.color.colorYellow);
+          Picasso.with(getApplicationContext()).load(listQuestionPlay.get(i).getLink_explain())
+                .error(R.mipmap.ic_launcher)
+                .into(image);
+
+        dialog.findViewById(R.id.positive_button).setOnClickListener(new OnClickListener() {
+
+            @Override
+
+            public void onClick(View v) {
+
+                dialog.dismiss();
                 i++;
                 Picasso.with(getApplicationContext()).load(listQuestionPlay.get(i).getLink_image())
                         .error(R.mipmap.ic_launcher)
                         .into(imgQuestion);
+            }
+
+        });
+
+        // Close
+
+        dialog.findViewById(R.id.close_button).setOnClickListener(new OnClickListener() {
+
+            @Override
+
+            public void onClick(View v) {
+
+                dialog.dismiss();
+                if(i < listQuestionPlay.size()-1){
+                    i++;
+                    Picasso.with(getApplicationContext()).load(listQuestionPlay.get(i).getLink_image())
+                            .error(R.mipmap.ic_launcher)
+                            .into(imgQuestion);
+                }  else {
+                    showDialog2();
+                }
+
+            }
+
+        });
+        dialog.show();
+    }
+    private void showDialog2(){
+        // custom dialog
+        final Dialog dialog = new Dialog(QuestionScreen.this);
+        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialogend);
+        TextView tv = (TextView)dialog.findViewById(R.id.txtEnd);
+        tv.setText("Chuc mung ban da tra loi xong. Ban duoc " + diem +" diem.");
+        dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN);
+
+        dialog.getWindow().setBackgroundDrawableResource(R.color.colorYellow);
+
+        dialog.findViewById(R.id.positive_button_end).setOnClickListener(new OnClickListener() {
+
+            @Override
+
+            public void onClick(View v) {
+
+            }
+
+        });
+
+        // Close
+
+        dialog.findViewById(R.id.close_button).setOnClickListener(new OnClickListener() {
+
+            @Override
+
+            public void onClick(View v) {
+
+                dialog.dismiss();
+
+            }
+
+        });
+        dialog.show();
+    }
+    @OnClick(R.id.btnNo1)
+    public void btn1_RunSingleTaskAfter2s() {
+        String result = listQuestionPlay.get(i).getResult();
+        showDialog();
+        if(result.equals("1")){
+           diem++;
         }
+
 
     }
     @OnClick(R.id.btnYes1)
     public void btnYesClick(){
         String result = listQuestionPlay.get(i).getResult();
-        if(result.equals("0") && i < listQuestionPlay.size()-1){
-            i++;
-                Picasso.with(getApplicationContext()).load(listQuestionPlay.get(i).getLink_image())
-                        .error(R.mipmap.ic_launcher)
-                        .into(imgQuestion);
+//        if(result.equals("0") && i < listQuestionPlay.size()-1){
+//            i++;
+//                Picasso.with(getApplicationContext()).load(listQuestionPlay.get(i).getLink_image())
+//                        .error(R.mipmap.ic_launcher)
+//                        .into(imgQuestion);
+//        }
+        if(result.equals("0")){
+            diem++;
         }
+        showDialog();
     }
     public void btn5_run(){
         Observable.just(getAllQues(Contants.URL_QUESTIONPLAY))
                 .doOnNext(new Action1<List<QuestionPlay.DataBean>>() {
                     @Override
                     public void call(List<QuestionPlay.DataBean> dataBeen) {
-                        _log1(" before ");
                     }
                 })
                 .delay(1,TimeUnit.SECONDS)
@@ -140,17 +254,15 @@ public class QuestionScreen extends Activity {
                 .subscribe(new Subscriber<List<QuestionPlay.DataBean>>() {
                     @Override
                     public void onCompleted() {
-                         _log2(" complete");
+
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        _log1(" error");
                     }
 
                     @Override
                     public void onNext(List<QuestionPlay.DataBean> dataBeen) {
-                        _log1(" onNext");
                     }
                 }) ;
     }
@@ -164,15 +276,7 @@ public class QuestionScreen extends Activity {
             }
         });
     }
-    private void _log1(final String a) {
-        // You can only do below stuff on main thread.
-        new Handler(getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(getApplicationContext(), listQuestionPlay.size()+ a, Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+
     private void _log2(final String a) {
         // You can only do below stuff on main thread.
         new Handler(getMainLooper()).post(new Runnable() {
@@ -182,8 +286,32 @@ public class QuestionScreen extends Activity {
                     Picasso.with(getApplicationContext()).load(listQuestionPlay.get(i).getLink_image())
                             .error(R.mipmap.ic_launcher)
                             .into(imgQuestion);
-                               Toast.makeText(getApplicationContext(), listQuestionPlay.get(0).getLink_image() + a, Toast.LENGTH_SHORT).show();
             }
         });
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        System.gc();
+    }
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
+    }
+
 }

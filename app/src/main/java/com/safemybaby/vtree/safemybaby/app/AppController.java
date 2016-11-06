@@ -3,6 +3,7 @@ package com.safemybaby.vtree.safemybaby.app;
 import android.app.Application;
 import android.text.TextUtils;
 
+import com.activeandroid.ActiveAndroid;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
@@ -19,6 +20,8 @@ public class AppController extends Application {
 	public void onCreate() {
 		super.onCreate();
 		mInstance = this;
+		ActiveAndroid.initialize(this);
+
 	}
 
 	public static synchronized AppController getInstance() {
@@ -49,5 +52,13 @@ public class AppController extends Application {
 		if (mRequestQueue != null) {
 			mRequestQueue.cancelAll(tag);
 		}
+	}
+	public void cancelAllCustom(RequestQueue mRequestQueue){
+		mRequestQueue.cancelAll(new RequestQueue.RequestFilter() {
+			@Override
+			public boolean apply(Request<?> request) {
+				return true;
+			}
+		});
 	}
 }

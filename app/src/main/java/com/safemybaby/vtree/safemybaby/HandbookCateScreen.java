@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,6 +28,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
 import utils.Contants;
 
 /**
@@ -41,6 +44,17 @@ public class HandbookCateScreen extends Activity {
     CateAdapter cateAdapter;
     private String TAG = "HandbookCateScreen";
     private String tag_json_obj = "jobj_req", tag_json_arry = "jarray_req";
+    static HandbookCateScreen handbookCateScreen;
+    boolean doubleBackToExitPressedOnce = false;
+    Unbinder unbinder;
+    @OnClick(R.id.btnBackHandbookCateScreen)
+    public void backToPreScreen(){
+        Intent  i = new Intent(HandbookCateScreen.this,MainActivity.class);
+        startActivity(i);
+        AppController.getInstance().cancelAllCustom( AppController.getInstance().getRequestQueue());
+        finish();
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +67,7 @@ public class HandbookCateScreen extends Activity {
                 Toast.makeText(getApplicationContext(), possition+"", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(HandbookCateScreen.this, DetailHandbookScreen.class);
                 startActivity(i);
+                finish();
             }
         });
         listCate = new ArrayList<>();
@@ -62,6 +77,12 @@ public class HandbookCateScreen extends Activity {
         //cateAdapter.updateList(lisCate);
         //new JsonTask().execute(Contants.URL_CATEGORY);
 
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        this. overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
     public List<Category> getAllCate(String url) {
@@ -151,5 +172,31 @@ public class HandbookCateScreen extends Activity {
     public void notifyDataSetChanged() {
         cateAdapter.notifyDataSetChanged();
     }
+    public static HandbookCateScreen getInstance(){
+        return   handbookCateScreen;
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        System.gc();
+    }
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
+    }
 }
